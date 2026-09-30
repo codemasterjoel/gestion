@@ -25,10 +25,6 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(true);
 
-            $table->foreignId('area_id')->nullable()->references('id')->on('areas')->nullOnDelete()->cascadeOnUpdate();
-            $table->foreignId('nivel_id')->nullable()->references('id')->on('nivels')->nullOnDelete()->cascadeOnUpdate();
-            $table->foreignId('estado_id')->nullable()->references('id')->on('estados')->nullOnDelete()->cascadeOnUpdate();
-            $table->foreignId('municipio_id')->nullable()->references('id')->on('municipios')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('parroquia_id')->nullable()->references('id')->on('parroquias')->nullOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

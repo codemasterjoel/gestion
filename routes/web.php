@@ -16,6 +16,7 @@ use App\Http\Livewire\Rtl;
 
 use App\Http\Livewire\Postulacion\Index as postulacion;
 use App\Http\Livewire\Campamento\Index as campamento;
+use App\Http\Livewire\Geopunto\Index as geopunto;
 use App\Http\Livewire\Registro1x10ffm\Index as ffm;
 use App\Http\Livewire\Luchador\Index as registrolsb;
 use App\Http\Livewire\NBC\Index as registronbc;
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/lsb', registrolsb::class)->name('lsb');
     Route::get('/nbc', registronbc::class)->name('nbc');
     Route::get('/nbc/crear', crearnbc::class)->name('nbc.crear');
+    Route::get('/geopunto', geopunto::class)->name('geopunto');
     //Route::get('/nbc/{id}', registronbc::class)->name('nbc.editar');
     //Route::get('/nbc/editar/{id}', [Livewire\crearnbc\editar::class]);
     Route::get('/saime', saime::class)->name('saime');
