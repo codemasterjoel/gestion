@@ -8,9 +8,6 @@
                         <div style="margin-bottom: 10px;">
                             <select wire:model.live="estadoId" id="filtroEstado" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 <option value="">Todos</option>
-                                @foreach ($estados as $estado)
-                                    <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
-                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -39,34 +36,28 @@
             center:new google.maps.LatLng(7.735217273856046,-65.326115365625),
         });
 
-        @foreach ($nbcs as $nbc)
-            var marker{{$nbc->codigo}}
-            const contentString{{ $nbc->codigo }} =
+        @foreach ($geopuntos as $geopunto)
+            var marker{{$geopunto->id}}
+            const contentString{{ $geopunto->id }} =
                 '<div id="content" style="color:black;">' +
-                    '<p class="uppercase"><b>{{ $nbc->nombre }}</b></p><br>' +
-                    '<div id="bodyContent">'+
-                        '<p><b>JEFE DEL NBC: </b>{{ (isset($nbc->jefe->NombreCompleto)) ? $nbc->jefe->NombreCompleto : '' }}'+
-                        '<p><b>ESTADO: </b>{{ (isset($nbc->estado->nombre)) ? $nbc->estado->nombre : '' }}'+
-                        '<p><b>MUNICIPIO: </b>{{ (isset($nbc->municipio->nombre)) ? $nbc->municipio->nombre : '' }}'+
-                        '<p><b>PARROQUIA: </b>{{ (isset($nbc->parroquia->nombre)) ? $nbc->parroquia->nombre : '' }}'+
-                        '<p><b>CONCEJOS COMUNALES: </b>{{ $nbc->cant_consejos_comunales }}'+
-                        '<p><b>BASES DE MISIONES: </b>{{ $nbc->cant_bases_misiones }}'+
+                    '<p class="uppercase"><b>{{ $geopunto->nombre }}</b></p><br>' +
+                    '<div id="bodyContent">'+   
                     "</div>" +
                 "</div>";
-                const infowindow{{$nbc->codigo}} = new google.maps.InfoWindow({
-                content: contentString{{$nbc->codigo}},
+                const infowindow{{$geopunto->id}} = new google.maps.InfoWindow({
+                content: contentString{{$geopunto->id}},
                 });    
 
-            marker{{$nbc->codigo}} = new google.maps.Marker({
+            marker{{$geopunto->id}} = new google.maps.Marker({
                 map: map,
                 animation: google.maps.Animation.DROP,
-                position: new google.maps.LatLng({{$nbc->latitud}},{{$nbc->longitud}}),
-                title: '{{ $nbc->nombre }}',
+                position: new google.maps.LatLng({{$geopunto->lat}},{{$geopunto->lon}}),
+                title: '{{ $geopunto->nombre }}',
             });
 
-            marker{{$nbc->codigo}}.addListener("click", () => {
-                infowindow{{$nbc->codigo}}.open({
-                    anchor: marker{{$nbc->codigo}},
+            marker{{$geopunto->id}}.addListener("click", () => {
+                infowindow{{$geopunto->id}}.open({
+                    anchor: marker{{$geopunto->id}},
                     map,
                     shouldFocus: false,
                 });

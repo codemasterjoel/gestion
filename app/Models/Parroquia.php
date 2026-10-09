@@ -21,4 +21,8 @@ class Parroquia extends Model
     {
         return $this->hasMany(NBC::class);
     }
+    public function ejes()
+    {
+        return $this->belongsToMany(Eje::class, 'eje_parroquia', 'parroquia_id', 'eje_id');
+    }
 }

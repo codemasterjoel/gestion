@@ -17,19 +17,30 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $parroquias, $comunas, $ejes, $categorias, $geopuntos;
-    public $parroquia_id, $comuna_id, $eje_id, $categoria_id;
+    public $parroquias, $comunas, $ejes, $categorias, $geopuntos, $nombreResponsable, $telefonoResponsable;
+    public $nombre, $lat, $lon, $parroquiaId, $comunaId, $ejeId, $categoriaId;
     public $search = '';
 
     public function render()
     {
         $this->parroquias = Parroquia::all();
-        $this->comunas = Comuna::all();
+        // $this->comunas = Comuna::all();
         $this->ejes = Eje::all();
         $this->categorias = Categoria::all();
         $this->geopuntos = Geopunto::all();
 
         // dd($geopuntos);
-        return view('livewire.geopunto.index', ['geopuntos' => $this->geopuntos, 'categorias' => $this->categorias]);
+        return view('livewire.geopunto.index', ['geopuntos' => $this->geopuntos, 'categorias' => $this->categorias, 'parroquias' => $this->parroquias]);
+    }
+    public function updatedParroquiaId($id){
+        $this->comunaId = null;
+        $this->comunas = Comuna::where('parroquia_id', $id)->get();
+        // $this->ejes = Eje::whereHas('parroquias', function($query) use ($id) {
+        //     $query->where('parroquia_id', $id);
+        // })->get();
+    }
+    public function limpiarCampos(){
+        $this->resetValidation();
+        $this->reset();
     }
 }

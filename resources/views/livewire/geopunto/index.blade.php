@@ -89,6 +89,9 @@
                                                 <span class="bg-cyan-400 px-3 py-[0.25rem] rounded-tl-lg rounded-bl-lg text-white font-bold">Parroquia</span>
                                                 <select class="w-full pl-3 border rounded-r-lg text-neutral-900 border-solid border-neutral-900 outline-2 font-bold" wire:model.live="parroquiaId" required>
                                                     <option value="">Seleccione</option>
+                                                    @foreach( $parroquias as $parroquia )
+                                                        <option value="{{ $parroquia->id }}">{{ $parroquia->nombre }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             @error('parroquiaId')<div class="text-danger">{{ $message }}</div> @enderror
@@ -102,7 +105,14 @@
                                             <div class="flex">
                                                 <span class="bg-cyan-400 px-3 py-[0.25rem] rounded-tl-lg rounded-bl-lg text-white font-bold">Eje</span>
                                                 <select class="w-full pl-3 border rounded-r-lg text-neutral-900 border-solid border-neutral-900 outline-2 font-bold" wire:model.live="ejeId" required>
-                                                    <option value="">Seleccione</option>
+                                                    @if (is_null($ejes))
+                                                        <option value="">SELECCIONE PARROQUIA PRIMERO</option>
+                                                    @else
+                                                        <option value="">Seleccione</option>
+                                                        @foreach( $ejes as $eje )
+                                                            <option value="{{ $eje->id }}">{{ $eje->nombre }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
                                             @error('ejeId')<div class="text-danger">{{ $message }}</div> @enderror
@@ -111,6 +121,7 @@
                                 </div>
                             </div>
 
+                            @if (!is_null($comunas)) {{-- campo categoria --}}
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-xl-0">
                                     <div class="flex items-center justify-center pt-4"> {{-- campo estado --}}
@@ -118,7 +129,14 @@
                                             <div class="flex">
                                                 <span class="bg-cyan-400 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Comuna o Circuito Comunal</span>
                                                 <select class="flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="comunaId" required>
-                                                    <option value="">Seleccione</option>
+                                                    @if (is_null($comunas))
+                                                        <option value="">SELECCIONE PARROQUIA PRIMERO</option>
+                                                    @else
+                                                        <option value="">Seleccione</option>
+                                                        @foreach( $comunas as $comuna )
+                                                            <option value="{{ $comuna->id }}">{{ $comuna->nombre }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
                                             @error('comunaId') <div class="text-danger">{{ $message }}</div> @enderror
@@ -126,6 +144,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
 
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-xl-0">
@@ -135,6 +154,9 @@
                                                 <span class="bg-cyan-400 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">CATEGORÍA</span>
                                                 <select class="flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="categoriaId" required>
                                                     <option value="">Seleccione</option>
+                                                    @foreach( $categorias as $categoria )
+                                                        <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             @error('categoriaId') <div class="text-danger">{{ $message }}</div> @enderror
@@ -144,11 +166,11 @@
                             </div>
 
                             
-                            <div class="flex items-stretch pt-4"> {{-- campo Nombre del NBC --}}
+                            <div class="flex items-stretch pt-4"> {{-- campo Nombre del Geopunto --}}
                                 <span class="flex bg-cyan-400 font-bold text-white items-center whitespace-nowrap rounded-l-lg border border-r-0 border-solid border-neutral-900 px-3 py-[0.25rem] text-center">Nombre</span>
-                                <input wire:model="NombreNBC" type="text" class="w-full flex-auto relative pl-3 border border-solid rounded-r-lg font-bold text-neutral-900 text-uppercase outline-2 border-neutral-900" />
+                                <input wire:model="nombre" type="text" class="w-full flex-auto relative pl-3 border border-solid rounded-r-lg font-bold text-neutral-900 text-uppercase outline-2 border-neutral-900" />
                             </div>
-                            @error('NombreNBC')<div class="text-danger">{{ $message }}</div> @enderror
+                            @error('nombre')<div class="text-danger">{{ $message }}</div> @enderror
 
                             <div class="row"> {{-- campo responsable --}}
                                 <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-xl-0">
@@ -156,9 +178,9 @@
                                         <div class="w-full rounded-lg">
                                             <div class="flex">
                                                 <span class="bg-cyan-400 px-3 py-[0.25rem] rounded-tl-lg rounded-bl-lg text-white font-bold">RESPONSABLE</span>
-                                                <input wire:model="NombreResponsable" type="text" class="w-full pl-3 border border-solid uppercase rounded-r-lg font-bold text-neutral-900 outline-2 border-slate-900" />
+                                                <input wire:model="nombreResponsable" type="text" class="w-full pl-3 border border-solid uppercase rounded-r-lg font-bold text-neutral-900 outline-2 border-slate-900" />
                                             </div>
-                                            @error('NombreResponsable')<div class="text-danger">{{ $message }}</div> @enderror
+                                            @error('nombreResponsable')<div class="text-danger">{{ $message }}</div> @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -167,9 +189,9 @@
                                         <div class="w-full rounded-lg">
                                             <div class="flex">
                                                 <span class="bg-cyan-400 px-3 py-[0.25rem] rounded-tl-lg rounded-bl-lg text-white font-bold">TELEFONO</span>
-                                                <input wire:model="TelefonoResponsable" type="text" class="w-full pl-3 border border-solid uppercase rounded-r-lg font-bold text-neutral-900 outline-2 border-slate-900" />
+                                                <input wire:model="telefonoResponsable" type="text" class="w-full pl-3 border border-solid uppercase rounded-r-lg font-bold text-neutral-900 outline-2 border-slate-900" />
                                             </div>
-                                            @error('TelefonoResponsable')<div class="text-danger">{{ $message }}</div> @enderror
+                                            @error('telefonoResponsable')<div class="text-danger">{{ $message }}</div> @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +221,7 @@
                         </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="w-32 bg-gradient-to-r from-red-400 to-red-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" wire:click.prevent="limpiarCampos()" data-bs-dismiss="modal">Salir</button>
+                    <button type="button" class="w-32 bg-gradient-to-r from-red-400 to-red-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" wire:click.prevent="limpiarCampos()"  data-bs-dismiss="modal">Salir</button>
                     <button type="submit" class="w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" wire:click.prevent="guardar()">GUARDAR</button>
                 </div>
             </div>

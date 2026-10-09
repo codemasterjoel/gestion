@@ -22,4 +22,15 @@ class Geopunto extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
+    protected $fillable = [
+        'nombre',
+        'latitud',
+        'longitud',
+        'direccion',
+        'descripcion',
+        'categoria_id',
+        'parroquia_id',
+        'comuna_id',
+        'eje_id',
+    ];
 }

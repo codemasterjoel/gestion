@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(ProfesionSeeder::class);
         // $this->call(ResponsabilidadSeeder::class);
         // $this->call(RegistroLuchadorSeeder::class);
-        // $this->call(AreaSeeder::class);
+        $this->call(EjeSeeder::class);
+        $this->call(CategoriaSeeder::class);
         $this->call(UserSeeder::class);
         // $this->call(SaimeSeeder::class);
         // $this->call(cneSeeder::class);

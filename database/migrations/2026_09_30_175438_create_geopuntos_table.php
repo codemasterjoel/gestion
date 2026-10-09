@@ -13,9 +13,8 @@ return new class extends Migration
             $table->string('nombre')->nullable();
             $table->string('direccion')->nullable();
             $table->text('descripcion')->nullable();
-
-            $table->text('latitud')->nullable();
-            $table->text('longitud')->nullable();
+            $table->string('latitud')->nullable();
+            $table->string('longitud')->nullable();
 
             $table->foreignId('eje_id')->nullable()->references('id')->on('ejes')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('parroquia_id')->nullable()->references('id')->on('parroquias')->nullOnDelete()->cascadeOnUpdate();

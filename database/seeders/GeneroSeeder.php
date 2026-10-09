@@ -8,9 +8,6 @@ use App\models\Genero;
 
 class GeneroSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Genero::insert([
