@@ -105,12 +105,13 @@
                                             <div class="flex">
                                                 <span class="bg-cyan-400 px-3 py-[0.25rem] rounded-tl-lg rounded-bl-lg text-white font-bold">Eje</span>
                                                 <select class="w-full pl-3 border rounded-r-lg text-neutral-900 border-solid border-neutral-900 outline-2 font-bold" wire:model.live="ejeId" required>
-                                                    @if (is_null($ejes))
+                                                    @if (is_null($ejesparroquias))
                                                         <option value="">SELECCIONE PARROQUIA PRIMERO</option>
                                                     @else
+                                                        
                                                         <option value="">Seleccione</option>
-                                                        @foreach( $ejes as $eje )
-                                                            <option value="{{ $eje->id }}">{{ $eje->nombre }}</option>
+                                                        @foreach( $ejesparroquias as $ejeparroquia )
+                                                            <option value="{{ $ejeparroquia->eje->id }}">{{ $ejeparroquia->eje->nombre }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -121,29 +122,29 @@
                                 </div>
                             </div>
 
-                            @if (!is_null($comunas)) {{-- campo categoria --}}
-                            <div class="row">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-xl-0">
-                                    <div class="flex items-center justify-center pt-4"> {{-- campo estado --}}
-                                        <div class="w-full rounded-lg">
-                                            <div class="flex">
-                                                <span class="bg-cyan-400 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Comuna o Circuito Comunal</span>
-                                                <select class="flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="comunaId" required>
-                                                    @if (is_null($comunas))
-                                                        <option value="">SELECCIONE PARROQUIA PRIMERO</option>
-                                                    @else
-                                                        <option value="">Seleccione</option>
-                                                        @foreach( $comunas as $comuna )
-                                                            <option value="{{ $comuna->id }}">{{ $comuna->nombre }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
+                            @if (!is_null($comunas)) {{-- campo comunas --}}
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-xl-0">
+                                        <div class="flex items-center justify-center pt-4"> {{-- campo estado --}}
+                                            <div class="w-full rounded-lg">
+                                                <div class="flex">
+                                                    <span class="bg-cyan-400 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Comuna o Circuito Comunal</span>
+                                                    <select class="flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="comunaId" required>
+                                                        @if (is_null($comunas))
+                                                            <option value="">SELECCIONE PARROQUIA PRIMERO</option>
+                                                        @else
+                                                            <option value="">Seleccione</option>
+                                                            @foreach( $comunas as $comuna )
+                                                                <option value="{{ $comuna->id }}">{{ $comuna->nombre }}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                @error('comunaId') <div class="text-danger">{{ $message }}</div> @enderror
                                             </div>
-                                            @error('comunaId') <div class="text-danger">{{ $message }}</div> @enderror
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             @endif
 
                             <div class="row">
@@ -208,12 +209,12 @@
                                     <div class="row">
                                         <label>COORDENADAS UTM</label>
                                         <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 mb-xl-0 mt-2">
-                                            <input wire:model="lat" type="text" name="latitud" value="" id="latitud" class="form-control">
-                                            @error('lat')<div class="text-danger">{{ $message }}</div> @enderror
+                                            <input wire:model="latitud" type="text" name="latitud" value="" id="latitud" class="form-control">
+                                            @error('latitud')<div class="text-danger">{{ $message }}</div> @enderror
                                         </div>
                                         <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 mb-xl-0 mt-2">
-                                            <input wire:model="lon" type="text" name="longitud" value="" id="longitud" class="form-control">
-                                            @error('lon')<div class="text-danger">{{ $message }}</div> @enderror
+                                            <input wire:model="longitud" type="text" name="longitud" value="" id="longitud" class="form-control">
+                                            @error('longitud')<div class="text-danger">{{ $message }}</div> @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -222,7 +223,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="w-32 bg-gradient-to-r from-red-400 to-red-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" wire:click.prevent="limpiarCampos()"  data-bs-dismiss="modal">Salir</button>
-                    <button type="submit" class="w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" wire:click.prevent="guardar()">GUARDAR</button>
+                    <button type="submit" class="w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" wire:click.prevent="save()">GUARDAR</button>
                 </div>
             </div>
         </div>
@@ -268,5 +269,14 @@
     });
   }
 </script>
+@script
+<script>
+    $wire.on('cerrarModal', () => {
+        const modalElement = document.getElementById('exampleModal');
+        const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+        modal.hide();
+    });
+</script>
+@endscript
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZhH6WXRQpmvkrpZ6w-kBIQTqOwHuPncI&callback=initMap&v=weekly" defer></script>
 

@@ -4,11 +4,7 @@ namespace App\Http\Livewire\Usuario;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\Estado;
-use App\Models\Municipio;
 use App\Models\Parroquia;
-use App\Models\Nivel;
-use App\Models\area;
 
 use Livewire\WithPagination;
 
@@ -20,11 +16,7 @@ class Index extends Component
     public $modal, $estado, $mostrar, $integranteModal, $showPassword = false;
     public $search = "";
     public $id = null;
-    public $municipios  = null; // Liste de Municipios
-    public $estados     = null; // Lista de estados
     public $parroquias  = null; // Lista de parroquias
-    public $niveles = null; //Niveles
-    public $areas = null; //Areas
     public $name = null; //usuario
     public $email = null; //Correo
     public $password = null; //Contrasena
@@ -32,9 +24,6 @@ class Index extends Component
 
     public function render()
     {
-        $this->estados = Estado::where('id', '<', '25')->get();
-        $this->niveles = Nivel::all();
-        $this->areas = area::all();
         $usuarios = User::query()->paginate(5);
         return view('livewire.usuario.index', ['usuarios' => $usuarios]);
     }
@@ -56,7 +45,6 @@ class Index extends Component
     {
         $usuario = User::findOrFail($id);
 
-        $this->municipios = Municipio::all();
         $this->parroquias = Parroquia::all();
 
         // dd(decrypt($usuario->password));
@@ -64,10 +52,6 @@ class Index extends Component
         $this->id = $id;
         $this->name = $usuario->name;
         $this->email = $usuario->email;
-        $this->areaId = $usuario->area_id;
-        $this->nivelId = $usuario->nivel_id;
-        $this->estadoId = $usuario->estado_id;
-        $this->municipioId = $usuario->municipio_id;
         $this->parroquiaId = $usuario->parroquia_id;
         $this->password = $usuario->password;
 

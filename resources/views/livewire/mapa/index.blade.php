@@ -19,6 +19,10 @@
                     <div class="row">
                         <div class="col-sm-12">
                             {{-- <x-maps-google id="map" :mapType="'satellite'"></x-maps-google> --}}
+                            <!-- Add script to the <head> of your page to load the embeddable map component -->
+                            <script type="module" src="https://js.arcgis.com/5.1/embeddable-components/"></script>
+                            <!-- Add custom element to <body> of your page -->
+                            <arcgis-embedded-map style="height:200%;width:100%;" item-id="9d204897e0934abea2a3fa4310767913" theme="light" legend-enabled basemap-gallery-enabled time-zone-label-enabled center="-67.00621692898312,10.468939978585597"scale="144447.638572" portal-url="https://innovartech.maps.arcgis.com"></arcgis-embedded-map>
                         </div>
                     </div>
                 </div>
@@ -51,7 +55,7 @@
             marker{{$geopunto->id}} = new google.maps.Marker({
                 map: map,
                 animation: google.maps.Animation.DROP,
-                position: new google.maps.LatLng({{$geopunto->lat}},{{$geopunto->lon}}),
+                position: new google.maps.LatLng({{$geopunto->latitud}},{{$geopunto->longitud}}),
                 title: '{{ $geopunto->nombre }}',
             });
 
