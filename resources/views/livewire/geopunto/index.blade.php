@@ -108,7 +108,6 @@
                                                     @if (is_null($ejesparroquias))
                                                         <option value="">SELECCIONE PARROQUIA PRIMERO</option>
                                                     @else
-                                                        
                                                         <option value="">Seleccione</option>
                                                         @foreach( $ejesparroquias as $ejeparroquia )
                                                             <option value="{{ $ejeparroquia->eje->id }}">{{ $ejeparroquia->eje->nombre }}</option>
@@ -193,6 +192,37 @@
                                                 <input wire:model="telefonoResponsable" type="text" class="w-full pl-3 border border-solid uppercase rounded-r-lg font-bold text-neutral-900 outline-2 border-slate-900" />
                                             </div>
                                             @error('telefonoResponsable')<div class="text-danger">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row pt-4">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-xl-0">
+                                    <div class="form-field">
+                                        <label for="observaciones" class="form-label text-cyan-400 font-bold">OBSERVACIONES</label>
+                                        <textarea wire:model="observaciones" class="form-control" id="observaciones" rows="3"></textarea>
+                                        <div class="form-text">
+                                            Anotaciones adicionales sobre el geopunto
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-xl-12 col-sm-12 mb-xl-0">
+                                    <div class="flex items-center justify-center pb-4">
+                                        <div class="w-full rounded-lg">
+                                            <div class="max-w-xs">
+                                                    @if ($foto)
+                                                        <div class="flex items-center justify-center">
+                                                            <img width="400" height="500" src="{{asset($foto)}}" alt="">
+                                                        </div>
+                                                    @endif
+                                                <label for="foto" class="mb-1 block text-sm font-medium text-gray-700"><b>IMAGEN DEL GEOPUNTO</b></label>
+                                                <input id="foto" type="file" wire:model="foto" class="relative flex mt-2 min-w-0 rounded-lg border text-sm file:mr-4 file:rounded-md file:border-0 file:bg-cyan-900 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:bg-teal-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60" accept="image/png,image/jpeg,image/jpg"/>
+                                            </div>
+                                            @error('foto') <div class="text-danger">{{ $message }}</div> @enderror
                                         </div>
                                     </div>
                                 </div>
