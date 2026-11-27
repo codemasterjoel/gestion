@@ -12,6 +12,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->foreignId('parroquia_id')->nullable()->references('id')->on('parroquias')->nullOnDelete()->cascadeOnUpdate();
+
+            $table->geometry('geom', subtype: 'multipolygon', srid: 4326)->nullable(false);
+            $table->spatialIndex('geom');
             $table->timestamps();
         });
     }
